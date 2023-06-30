@@ -29,7 +29,7 @@ public:
 	virtual void Release();
 
 	virtual void Enter();	//씬 전환을 할 때 Init 대신 사용
-	virtual void Exit();	
+	virtual void Exit();	//한 번 push_back 한 리소스를 
 
 	virtual void Update(float dt);
 	virtual void Draw(sf::RenderWindow& window);

@@ -22,9 +22,9 @@ public:
 	void SetActive(bool active);
 
 	std::string GetName();
-	virtual void SetName(const std::string& n);
+	void SetName(const std::string& n);
 
-	sf::Vector2f GetPosition();
+	virtual sf::Vector2f GetPosition();
 
 	virtual void SetPosition(float x, float y);
 	virtual void SetPosition(const sf::Vector2f& p);

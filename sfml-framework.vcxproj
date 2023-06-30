@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject\Brick.cpp" />
     <ClCompile Include="GameObject\Ball.cpp" />
     <ClCompile Include="GameObject\Bar.cpp" />
     <ClCompile Include="Framework\Framework.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="GameObject\TextGo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject\Brick.h" />
     <ClInclude Include="GameObject\Ball.h" />
     <ClInclude Include="GameObject\Bar.h" />
     <ClInclude Include="GameObject\GameObject.h" />

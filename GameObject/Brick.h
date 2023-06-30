@@ -1,16 +1,16 @@
 #pragma once
 #include "GameObject.h"
-class Bar :
+class Brick :
     public GameObject
 {
 protected:
-	sf::Vector2f direction = { 0.f, 0.f };
+	sf::RectangleShape brick;
 
 public:
-	sf::RectangleShape rectShape;
+	Brick(const std::string n = "");
+	virtual ~Brick();
 
-	Bar(const std::string n);
-	virtual ~Bar();
+	virtual sf::Vector2f GetPosition() override;
 
 	virtual void SetPosition(float x, float y) override;
 	virtual void SetPosition(const sf::Vector2f& p) override;
@@ -24,7 +24,5 @@ public:
 
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow& window) override;
-
-	sf::Vector2f GetDirection();
 };
 

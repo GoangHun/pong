@@ -1,10 +1,18 @@
 #include "stdafx.h"
 #include "GameScene.h"
 #include "InputMgr.h"
+#include "ResourceMgr.h"
+#include "TextGo.h"
 
 
 GameScene::GameScene() : Scene(SceneId::Game)
 {
+	resources.push_back(std::make_tuple(ResourceTypes::Font, "fonts/DS-DIGI.ttf"));
+
+	for (auto brick : bricks)
+	{
+		brick = new Brick();
+	}
 }
 
 void GameScene::Init()
@@ -14,6 +22,10 @@ void GameScene::Init()
 
 	AddGo(new Bar("Bar"));
 	AddGo(new Ball((Bar*)FindGo("Bar"), "Ball"));
+
+	AddGo(new TextGo("Score"));
+	AddGo(new TextGo("Life"));
+
 	for (auto go : gameObjects)
 	{
 		go->Init();
@@ -50,6 +62,17 @@ void GameScene::Enter()
 	ball->SetOrigin(Origins::MC);
 	ball->circleShape.setFillColor(sf::Color::White);
 
+	TextGo* findGo = (TextGo*)FindGo("Score");
+	findGo->text.setFont(*RESOURCE_MGR.GetFont("fonts/DS-DIGI.ttf"));
+	findGo->SetText("Score: " + std::to_string(score), 50, sf::Color::White, 0.f, 0.f);
+	findGo->SetOrigin(Origins::TL);
+
+	float interval = findGo->text.getLocalBounds().width + 50.f;
+
+	findGo = (TextGo*)FindGo("Life");
+	findGo->text.setFont(*RESOURCE_MGR.GetFont("fonts/DS-DIGI.ttf"));
+	findGo->SetText("Life: " + std::to_string(life), 50, sf::Color::White, interval, 0.f);
+	findGo->SetOrigin(Origins::TL);
 }
 
 void GameScene::Exit()
@@ -60,19 +83,13 @@ void GameScene::Exit()
 void GameScene::Update(float dt)
 {
 	Scene::Update(dt);
-	if (INPUT_MGR.GetKey(sf::Keyboard::Left))
-	{
-		bar->SetPosition(bar->rectShape.getPosition().x + -1.f * 700.f * dt, bar->rectShape.getPosition().y);
-	}
-	if (INPUT_MGR.GetKey(sf::Keyboard::Right))
-	{
-		bar->SetPosition(bar->rectShape.getPosition().x + 1.f * 700.f * dt, bar->rectShape.getPosition().y);
-	}
 
 	for (auto go : gameObjects)
 	{
 		go->Update(dt);
 	}
+
+	Dead();
 }
 
 void GameScene::Draw(sf::RenderWindow& window)
@@ -83,4 +100,17 @@ void GameScene::Draw(sf::RenderWindow& window)
 		go->Draw(window);
 	}
 	
+}
+
+void GameScene::Dead()
+{
+	if (ball->circleShape.getPosition().y > 1080)
+	{
+		life -= 1;
+
+		TextGo* findGo = (TextGo*)FindGo("Life");
+		findGo->SetText("Life: " + std::to_string(life));
+
+		ball->Init();
+	}
 }

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Bar.h"
+#include "InputMgr.h"
 
 Bar::Bar(const std::string n) : GameObject(n)
 {
@@ -44,9 +45,28 @@ void Bar::Reset()
 
 void Bar::Update(float dt)
 {
+	if (INPUT_MGR.GetKey(sf::Keyboard::Left))
+	{
+		direction.x = -1.f;
+	}
+	if (INPUT_MGR.GetKey(sf::Keyboard::Right))
+	{
+		direction.x = 1.f;
+	}
+	if (INPUT_MGR.GetKeyUp(sf::Keyboard::Left) || INPUT_MGR.GetKeyUp(sf::Keyboard::Right))
+	{
+		direction.x = 0.f;
+	}
+
+	SetPosition(rectShape.getPosition().x + direction.x * 700.f * dt, rectShape.getPosition().y);
 }
 
 void Bar::Draw(sf::RenderWindow& window)
 {
 	window.draw(rectShape);
+}
+
+sf::Vector2f Bar::GetDirection()
+{
+	return direction;
 }

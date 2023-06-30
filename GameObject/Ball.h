@@ -9,6 +9,9 @@ protected:
 	bool isLinked = true;
 	Bar* bar;
 
+	sf::Vector2f direction = { 0.f, -1.f };
+	float speed = 500.f;
+
 public:
 	sf::CircleShape circleShape;
 
@@ -27,5 +30,8 @@ public:
 
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow& window) override;
+
+	bool IsCollided();
+	void Shot();
 };
 

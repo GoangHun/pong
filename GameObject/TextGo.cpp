@@ -63,3 +63,8 @@ void TextGo::SetText( const std::string str, int size, sf::Color color, float x,
 	Utils::SetOrigin(text, Origins::MC);
 	text.setPosition(x, y);
 }
+
+void TextGo::SetText(const std::string str)
+{
+	text.setString(str);
+}
